@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메인 페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src = "https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+</head>
+<body>
+    <h1>메인 페이지 </h1>
+    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+
+    <script>
+        $(document).ready(function(){
+            var main = $('.bxslider').bxSlider({
+                mode: 'fade',
+                auto: true,	//자동으로 슬라이드
+                controls : true,	//좌우 화살표
+                autoControls: true,	//stop,play
+                pager:true,	//페이징
+                pause: 3000,
+                autoDelay: 0,
+                slideWidth: 800,
+                speed: 500,
+                stopAutoOnclick:true
+            });
+
+            $(".bx-stop").click(function(){	// 중지버튼 눌렀을때
+                main.stopAuto();
+                $(".bx-stop").hide();
+                $(".bx-start").show();
+                return false;
+            });
+
+            $(".bx-start").click(function(){	//시작버튼 눌렀을때
+                main.startAuto();
+                $(".bx-start").hide();
+                $(".bx-stop").show();
+                return false;
+            });
+
+            $(".bx-start").hide();	//onload시 시작버튼 숨김.
+        });
+    </script>
+    <div class="home__slider">
+        <div class="bxslider">
+            <div th:each="x : ${frontList}">
+                <div>
+                    <a th:href="${x.linkUrl}"><img th:src="${x.imagePath}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
